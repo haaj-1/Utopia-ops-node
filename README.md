@@ -1,6 +1,7 @@
 # Utopia Ops OS
-
+-
 An AI onboarding agent that takes a fellow’s name and start date, generates onboarding tasks with owners and due dates, drafts Slack messages, and outputs structured JSON for downstream workflows.
+-
 ---
 
 ## How to Run
