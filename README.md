@@ -1,7 +1,6 @@
 # Utopia Ops OS
 
-An AI agent that takes a new fellow's name and start date, builds a complete day-1 onboarding checklist with owners and due dates, drafts function-specific Slack messages for Ops and Tech, and emits structured JSON for downstream agent handoffs — so no setup item is ever chased manually.
-
+An AI onboarding agent that takes a fellow’s name and start date, generates onboarding tasks with owners and due dates, drafts Slack messages, and outputs structured JSON for downstream workflows.
 ---
 
 ## How to Run
