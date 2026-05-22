@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Utopia Ops</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="brand-block">
+          <div class="brand-lockup">
+            <span class="brand-sigil">U</span>
+            <div>
+              <h1>Utopia Ops</h1>
+              <p>Onboarding monitor</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="nav-label">Menu</p>
+
+        <button class="nav-button active" data-section="dashboard">
+          <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M2 4a2 2 0 012-2h4a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2V4zm10 0a2 2 0 012-2h4a2 2 0 012 2v4a2 2 0 01-2 2h-4a2 2 0 01-2-2V4zM2 14a2 2 0 012-2h4a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4zm10 0a2 2 0 012-2h4a2 2 0 012 2v4a2 2 0 01-2 2h-4a2 2 0 01-2-2v-4z"/></svg>
+          Dashboard
+        </button>
+
+        <button class="nav-button" data-section="actions">
+          <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/><path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"/></svg>
+          Slack Actions
+        </button>
+
+        <button class="nav-button" data-section="integrations">
+          <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
+          Integrations
+        </button>
+
+        <button class="nav-button" data-section="logs">
+          <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
+          Agent Logs
+        </button>
+      </aside>
+
+      <!-- Main workspace -->
+      <main class="workspace">
+
+        <!-- Topbar -->
+        <header class="topbar">
+          <div class="topbar-left">
+            <h2 id="page-title">Dashboard</h2>
+            <span class="status-pill">
+              <span class="status-pill-dot"></span>
+              <span id="api-status">Connecting...</span>
+            </span>
+          </div>
+          <div class="topbar-right">
+            <button class="btn btn-ghost" id="theme-toggle" type="button">Dark mode</button>
+            <button class="btn btn-primary" id="refresh-agent" type="button">↻ Refresh</button>
+            <button class="btn" id="copy-json" type="button">Copy JSON</button>
+          </div>
+        </header>
+
+        <!-- ── Dashboard panel ── -->
+        <section class="page-panel" data-panel="dashboard">
+
+          <!-- Utility strip -->
+          <div class="utility-strip">
+            <div class="source-info">
+              <p>Data source</p>
+              <strong id="source-label">Live Linear data</strong>
+            </div>
+            <label class="upload-control">
+              <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+              Import CSV
+              <input id="csv-upload" type="file" accept=".csv,text/csv" />
+            </label>
+            <div style="position:relative;display:flex;align-items:center;">
+              <button class="btn btn-ghost" id="csv-format-btn" type="button" style="width:26px;height:26px;padding:0;border-radius:50%;font-size:0.78rem;font-weight:600;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;line-height:1;">?</button>
+              <div id="csv-format-popover" class="hidden" style="
+                position:absolute;
+                top:calc(100% + 8px);
+                left:50%;
+                transform:translateX(-50%);
+                z-index:50;
+                width:380px;
+                background:var(--surface);
+                border:1px solid var(--border);
+                border-radius:var(--radius);
+                box-shadow:0 8px 32px rgba(0,0,0,.12);
+                padding:16px 18px;
+              ">
+                <div style="font-size:0.8rem;font-weight:600;color:var(--ink);margin-bottom:10px;">CSV format — required columns</div>
+                <code style="display:block;background:var(--surface-2);padding:8px 12px;border-radius:6px;font-size:0.73rem;color:var(--ink);letter-spacing:0.01em;margin-bottom:12px;">fellow_name, start_date, task, status, owner, due_date, criticality</code>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;font-size:0.76rem;color:var(--muted);">
+                  <div><span style="color:var(--ink);font-weight:500;">owner:</span> ops | tech</div>
+                  <div><span style="color:var(--ink);font-weight:500;">criticality:</span> high | medium | low</div>
+                  <div style="grid-column:1/-1;"><span style="color:var(--ink);font-weight:500;">status:</span> not_started | pending | done | blocked</div>
+                  <div style="grid-column:1/-1;"><span style="color:var(--ink);font-weight:500;">start_date / due_date:</span> YYYY-MM-DD</div>
+                </div>
+                <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:0.72rem;color:var(--faint);">One row per task. Multiple tasks for the same fellow share the same fellow_name and start_date.</div>
+              </div>
+            </div>
+            <button class="btn" id="linear-sync-btn" type="button">⟳ Sync from Linear</button>
+          </div>
+
+          <form class="new-fellow-form" id="new-fellow-form">
+            <div>
+              <label for="new-fellow-name">New fellow</label>
+              <input id="new-fellow-name" name="name" type="text" placeholder="Name" autocomplete="off" required />
+            </div>
+            <div>
+              <label for="new-fellow-start">Start date</label>
+              <input id="new-fellow-start" name="startDate" type="date" required />
+            </div>
+            <button class="btn btn-primary" id="create-fellow" type="submit">Generate checklist</button>
+            <button class="btn" id="create-fellow-linear" type="button">+ Push to Linear</button>
+          </form>
+          <span class="form-feedback" id="new-fellow-feedback" aria-live="polite" style="display:block;min-height:1.4rem;font-size:0.8rem;margin:-14px 0 14px;padding:0 4px;"></span>
+
+          <!-- KPI cards -->
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-label">Fellows tracked</div>
+              <div class="kpi-value" id="kpi-track">—</div>
+              <div class="kpi-note" id="kpi-track-note">Loading...</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">At risk</div>
+              <div class="kpi-value" id="kpi-risk">—</div>
+              <div class="kpi-note">Amber + red</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Pipeline health</div>
+              <div class="kpi-value" id="kpi-health">—</div>
+              <div class="kpi-note">Tasks completed</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Open actions</div>
+              <div class="kpi-value" id="kpi-actions">—</div>
+              <div class="kpi-note">Reminders + escalations</div>
+            </div>
+          </div>
+
+          <!-- Main grid -->
+          <div class="dashboard-grid">
+            <div class="main-col">
+
+              <!-- Risk table -->
+              <div class="card">
+                <div class="card-header">
+                  <h3>Fellow Risk Monitor</h3>
+                </div>
+                <div class="risk-table-head">
+                  <span>Fellow</span>
+                  <span>Risk</span>
+                  <span>Missing item</span>
+                  <span>Owner</span>
+                  <span>Suggested action</span>
+                </div>
+                <div id="risk-rows"></div>
+              </div>
+
+              <!-- Slack composer -->
+              <div class="card">
+                <div class="card-header">
+                  <h3>Slack Message Draft</h3>
+                  <div style="display:flex;gap:8px;align-items:center;">
+                    <span style="font-size:0.72rem;color:var(--green);font-weight:600;">● Draft ready</span>
+                    <button class="btn" id="generate-all-depts" type="button">✦ Generate all with AI</button>
+                  </div>
+                </div>
+
+                <!-- Department tabs -->
+                <div class="dept-tabs">
+                  <button class="dept-tab active" data-dept="ops">Ops</button>
+                  <button class="dept-tab" data-dept="tech">Tech</button>
+                </div>
+
+                <!-- Per-department message panels -->
+                <div id="dept-panel-ops" class="dept-panel">
+                  <div class="dept-channel-label" id="dept-channel-ops">#ops-onboarding</div>
+                  <div class="composer-box" id="slack-msg-ops"><p style="color:var(--faint)">Run the agent to generate a draft.</p></div>
+                  <div class="composer-actions">
+                    <button class="btn btn-ghost" id="edit-ops" type="button" data-dept="ops">✎ Edit</button>
+                    <button class="btn btn-primary" id="send-ops" type="button" data-dept="ops">Send to Ops</button>
+                  </div>
+                </div>
+
+                <div id="dept-panel-tech" class="dept-panel hidden">
+                  <div class="dept-channel-label" id="dept-channel-tech">#studio-tech</div>
+                  <div class="composer-box" id="slack-msg-tech"><p style="color:var(--faint)">Run the agent to generate a draft.</p></div>
+                  <div class="composer-actions">
+                    <button class="btn btn-ghost" id="edit-tech" type="button" data-dept="tech">✎ Edit</button>
+                    <button class="btn btn-primary" id="send-tech" type="button" data-dept="tech">Send to Tech</button>
+                  </div>
+                </div>
+
+                <div class="composer-actions" style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px;">
+                  <button class="btn btn-primary" id="send-all-depts" type="button">Send to all departments</button>
+                  <button class="btn" id="send-red-alerts" type="button" style="background:var(--red);color:#fff;border-color:var(--red);">🔴 Send all red alerts</button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Side column: escalations + scheduler -->
+            <div class="side-col">
+              <div class="card">
+                <div class="card-header">
+                  <h3>Escalations</h3>
+                  <span id="esc-count" style="font-size:0.75rem;color:var(--muted);">0 items</span>
+                </div>
+                <div id="escalation-side"></div>
+              </div>
+
+              <!-- Scheduler card -->
+              <div class="card" style="margin-top:16px;">
+                <div class="card-header">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <span class="status-dot offline" id="scheduler-dot-main"></span>
+                    <h3 style="margin:0;">9am Doha Run</h3>
+                  </div>
+                </div>
+                <div style="padding:16px 18px;">
+                  <p id="scheduler-summary-main" style="font-size:0.8rem;color:var(--muted);margin:0 0 16px;line-height:1.5;"></p>
+                  <div style="display:flex;gap:8px;align-items:center;">
+                    <button class="btn btn-primary" type="button" id="scheduler-toggle-main" style="min-width:90px;">Loading...</button>
+                    <button class="btn btn-ghost" type="button" id="scheduler-run-now-main">Run now</button>
+                  </div>
+                  <div id="scheduler-last-run-main" style="font-size:0.73rem;color:var(--faint);margin-top:14px;padding-top:12px;border-top:1px solid var(--border);"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── Slack Actions panel ── -->
+        <section class="page-panel hidden" data-panel="actions">
+          <div class="actions-grid">
+            <div class="card">
+              <div class="card-header">
+                <h3>Reminder Queue</h3>
+                <button class="btn btn-primary" id="post-digest-alt" type="button">Send digest</button>
+              </div>
+              <div id="slack-list" class="message-list"></div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h3>Escalation Details</h3>
+              </div>
+              <div id="escalation-list" class="message-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── Integrations panel ── -->
+        <section class="page-panel hidden" data-panel="integrations">
+          <div class="card">
+            <div class="card-header">
+              <h3>Connected integrations</h3>
+              <button class="btn" id="refresh-connectors" type="button">Refresh status</button>
+            </div>
+            <div class="connector-grid">
+
+              <div class="connector-card" data-connector="slack">
+                <div class="connector-header">
+                  <span class="status-dot offline"></span>
+                  <strong>Slack</strong>
+                </div>
+                <p>Post daily digests and owner reminders. Supports Bot Token or Incoming Webhook.</p>
+                <div class="connector-actions">
+                  <button class="btn" type="button" data-action="slack-digest">Not configured</button>
+                  <button class="btn btn-ghost" id="slack-join-btn" type="button">Join all channels</button>
+                  <button class="btn btn-ghost configure-btn" type="button" data-target="cfg-slack">Set env vars</button>
+                </div>
+                <form class="config-form hidden" id="cfg-slack" data-connector="slack" autocomplete="off">
+                  <div class="config-note">Slash command request URL: /api/actions/slack/command. Use text like: Aisha Khan 2026-06-10</div>
+                  <label>Bot Token
+                    <input type="password" name="SLACK_BOT_TOKEN" placeholder="xoxb-…" autocomplete="new-password" />
+                  </label>
+                  <label>Signing Secret
+                    <input type="password" name="SLACK_SIGNING_SECRET" placeholder="Optional but recommended" autocomplete="new-password" />
+                  </label>
+                  <label>Default Channel
+                    <input type="text" name="SLACK_DEFAULT_CHANNEL" placeholder="all-utopia-ops-node" autocomplete="off" />
+                  </label>
+                  <label>Ops Channel
+                    <input type="text" name="SLACK_CHANNEL_OPS" placeholder="ops-channel" autocomplete="off" />
+                  </label>
+                  <label>Tech Channel
+                    <input type="text" name="SLACK_CHANNEL_TECH" placeholder="tech-channel" autocomplete="off" />
+                  </label>
+                  <label>Webhook URL (optional — only needed if not using Bot Token)
+                    <input type="password" name="SLACK_WEBHOOK_URL" placeholder="https://hooks.slack.com/services/…" autocomplete="new-password" />
+                  </label>
+                  <div class="config-form-actions">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-ghost" type="button" data-dismiss>Cancel</button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="connector-card" data-connector="linear">
+                <div class="connector-header">
+                  <span class="status-dot offline"></span>
+                  <strong>Linear</strong>
+                </div>
+                <p>Create onboarding projects and sync live task status. Requires an API key and team ID.</p>
+                <div class="connector-actions">
+                  <button class="btn" type="button" data-action="linear-issues">Not configured</button>
+                  <button class="btn btn-ghost configure-btn" type="button" data-target="cfg-linear">Set env vars</button>
+                </div>
+                <form class="config-form hidden" id="cfg-linear" data-connector="linear">
+                  <label>API Key<input type="password" name="LINEAR_API_KEY" placeholder="lin_api_…" id="linear-api-key-input" /></label>
+                  <label>Team ID
+                    <div style="display:flex;gap:6px;align-items:center;">
+                      <input type="text" name="LINEAR_TEAM_ID" placeholder="Paste ID or click Fetch →" id="linear-team-id-input" style="flex:1;" />
+                      <button class="btn btn-ghost" type="button" id="linear-fetch-team-btn" style="white-space:nowrap;">Fetch team ID</button>
+                    </div>
+                  </label>
+                  <div id="linear-team-list" style="display:none;margin-top:6px;"></div>
+                  <div class="config-form-actions">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-ghost" type="button" data-dismiss>Cancel</button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="connector-card" data-connector="google_sheets">
+                <div class="connector-header">
+                  <span class="status-dot offline"></span>
+                  <strong>Google Sheets</strong>
+                </div>
+                <p>Pull live onboarding data from a published CSV export URL.</p>
+                <div class="connector-actions">
+                  <button class="btn" type="button" data-action="sheets-sync">Not configured</button>
+                  <button class="btn btn-ghost configure-btn" type="button" data-target="cfg-sheets">Set env vars</button>
+                </div>
+                <form class="config-form hidden" id="cfg-sheets" data-connector="google_sheets">
+                  <label>CSV Export URL<input type="text" name="GOOGLE_SHEETS_CSV_URL" placeholder="https://docs.google.com/…/pub?output=csv" /></label>
+                  <div class="config-form-actions">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-ghost" type="button" data-dismiss>Cancel</button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="connector-card" data-connector="json_webhook">
+                <div class="connector-header">
+                  <span class="status-dot offline"></span>
+                  <strong>JSON Webhook</strong>
+                </div>
+                <p>Forward the full agent payload to any downstream API or workflow.</p>
+                <div class="connector-actions">
+                  <button class="btn" type="button" data-action="webhook">Not configured</button>
+                  <button class="btn btn-ghost configure-btn" type="button" data-target="cfg-webhook">Set env vars</button>
+                </div>
+                <form class="config-form hidden" id="cfg-webhook" data-connector="json_webhook">
+                  <label>Webhook URL<input type="text" name="JSON_WEBHOOK_URL" placeholder="https://…" /></label>
+                  <div class="config-form-actions">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-ghost" type="button" data-dismiss>Cancel</button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="connector-card" data-connector="llm">
+                <div class="connector-header">
+                  <span class="status-dot offline"></span>
+                  <strong>LLM</strong>
+                </div>
+                <p>Generate AI-written Slack messages via Google AI Studio (free), OpenAI, Anthropic, or DeepSeek.</p>
+                <div class="connector-actions">
+                  <button class="btn" type="button" data-action="llm-status">Not configured</button>
+                  <button class="btn btn-ghost configure-btn" type="button" data-target="cfg-llm">Set env vars</button>
+                </div>
+                <form class="config-form hidden" id="cfg-llm" data-connector="llm">
+                  <label>Provider
+                    <select name="LLM_PROVIDER" id="llm-provider-select">
+                      <option value="google">Google AI Studio (free)</option>
+                      <option value="openai">OpenAI</option>
+                      <option value="anthropic">Anthropic</option>
+                      <option value="deepseek">DeepSeek</option>
+                    </select>
+                  </label>
+                  <div class="llm-fields" data-provider="google">
+                    <label>Google AI API Key<input type="password" name="GOOGLE_AI_API_KEY" placeholder="AIzaSy…" /></label>
+                    <label>Model<input type="text" name="GOOGLE_AI_MODEL" placeholder="gemini-2.0-flash" /></label>
+                  </div>
+                  <div class="llm-fields hidden" data-provider="openai">
+                    <label>OpenAI API Key<input type="password" name="OPENAI_API_KEY" placeholder="sk-…" /></label>
+                    <label>Model (optional)<input type="text" name="OPENAI_MODEL" placeholder="gpt-4o" /></label>
+                  </div>
+                  <div class="llm-fields hidden" data-provider="anthropic">
+                    <label>Anthropic API Key<input type="password" name="ANTHROPIC_API_KEY" placeholder="sk-ant-…" /></label>
+                    <label>Model (optional)<input type="text" name="ANTHROPIC_MODEL" placeholder="claude-3-5-sonnet-20241022" /></label>
+                  </div>
+                  <div class="llm-fields hidden" data-provider="deepseek">
+                    <label>DeepSeek API Key<input type="password" name="DEEPSEEK_API_KEY" placeholder="sk-…" /></label>
+                    <label>API URL<input type="text" name="DEEPSEEK_API_URL" placeholder="https://api.deepseek.com/chat/completions" /></label>
+                    <label>Model<input type="text" name="DEEPSEEK_MODEL" placeholder="deepseek-chat" /></label>
+                  </div>
+                  <div class="config-form-actions">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-ghost" type="button" data-dismiss>Cancel</button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="connector-card" data-connector="scheduler">
+                <div class="connector-header">
+                  <span class="status-dot offline" id="scheduler-dot"></span>
+                  <strong>9am Doha Scheduler</strong>
+                </div>
+                <p id="scheduler-summary" style="font-size:0.8rem;color:var(--muted);margin:8px 0 14px;line-height:1.5;"></p>
+                <div style="display:flex;gap:8px;align-items:center;">
+                  <button class="btn" type="button" id="scheduler-toggle" style="min-width:90px;">Loading...</button>
+                  <button class="btn btn-ghost" type="button" id="scheduler-run-now">Run now</button>
+                </div>
+                <div class="config-note" id="scheduler-last-run" style="margin-top:12px;"></div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ── Logs panel ── -->
+        <section class="page-panel hidden" data-panel="logs">
+          <div class="card">
+            <div class="card-header">
+              <h3>Agent JSON output</h3>
+              <button class="btn" id="copy-json-logs" type="button">Copy</button>
+            </div>
+            <pre class="logs-pre" id="json-output"></pre>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <script src="./src/app.js"></script>
+  </body>
+</html>

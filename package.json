@@ -1,0 +1,17 @@
+{
+  "name": "utopia-ops-os",
+  "version": "2.0.0",
+  "description": "Onboarding operations agent — risk classification, Slack/Linear actions, LLM-generated messages.",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/server.js",
+    "test": "node --test test/**/*.test.js",
+    "check": "node --check backend/server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": ["operations", "agent", "onboarding", "utopia-os"],
+  "author": "",
+  "license": "Apache-2.0"
+}

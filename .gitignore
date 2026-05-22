@@ -1,0 +1,18 @@
+# Environment secrets — never commit these
+.env
+.env.enc
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp
