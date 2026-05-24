@@ -20,7 +20,7 @@ Set at minimum one LLM key. Google AI Studio is free and the default:
 ```env
 LLM_PROVIDER=google
 GOOGLE_AI_API_KEY=your-key-here
-GOOGLE_AI_MODEL=gemini-1.5-flash
+GOOGLE_AI_MODEL=gemini-2.5-flash
 ```
 
 And one Slack option:
